@@ -1,4 +1,4 @@
-package book.store.gui;
+package book.store.view;
 
 import java.awt.Color;
 
@@ -8,14 +8,7 @@ import javax.swing.SwingUtilities;
 public class ReadBookPanel extends JPanel {
     
     public ReadBookPanel(String user){
-        SwingUtilities.invokeLater(new Runnable(){
-
-            @Override
-            public void run() {
-                setupUI();                
-            }
-            
-        });
+        SwingUtilities.invokeLater(this::setupUI);
     }
 
     private void setupUI(){

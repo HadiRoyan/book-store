@@ -3,7 +3,7 @@
  */
 package book.store.main;
 
-import book.store.gui.Login;
+import book.store.view.Login;
 
 public class App {
     public String getGreeting() {

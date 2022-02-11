@@ -1,4 +1,4 @@
-package book.store.gui;
+package book.store.view;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;

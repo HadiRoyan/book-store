@@ -1,13 +1,13 @@
-package book.store.gui;
+package book.store.view;
 
 import java.awt.Color;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-public class DeleteBookPanel extends JPanel {
+public class UpdateBookPanel extends JPanel {
     
-    public DeleteBookPanel(String user){
+    public UpdateBookPanel(String user){
         SwingUtilities.invokeLater(new Runnable(){
 
             @Override
@@ -19,6 +19,6 @@ public class DeleteBookPanel extends JPanel {
     }
 
     private void setupUI(){
-        setBackground(Color.ORANGE);
+        setBackground(Color.GREEN);
     }
 }

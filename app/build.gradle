@@ -22,6 +22,15 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:30.1.1-jre'
+
+    // connector for mysql
+    implementation 'mysql:mysql-connector-java:8.0.28'
+
+    // connection pool
+    implementation 'com.zaxxer:HikariCP:5.0.1'
+
+    // logging
+    implementation 'ch.qos.logback:logback-classic:1.2.8'
 }
 
 application {

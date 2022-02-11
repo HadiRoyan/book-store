@@ -1,4 +1,4 @@
-package book.store.gui;
+package book.store.view;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -8,7 +8,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import book.store.services.User;
+import book.store.entity.User;
 
 
 import java.awt.Color;
@@ -104,7 +104,7 @@ public class Login implements ActionListener {
             
             if (user.isEmpty()) {
                 // failLabel.setText("USERNAME OR PASSWORD IS EMPTY");
-                setFailLabelText("USERNAME OR PASSWORD I EMPTY", Color.RED);
+                setFailLabelText("USERNAME OR PASSWORD IS EMPTY", Color.RED);
             } else if(pass.length < 8) {
                 // failLabel.setText("WRONG USERNAME OR PASSWORD");
                 setFailLabelText("PASSWORD MUST BE greater than or equal to 8 CHARACTER", Color.RED);
@@ -112,8 +112,7 @@ public class Login implements ActionListener {
                 inputPassword.setText("");
             } else {
                 // success login
-                System.out.println("user logged in succesfully | USERNAME : "+ user+"\n");
-                new User(user);
+                new User("",user, "");
                 frame.dispose();
                 new MainMenu(user);
             }

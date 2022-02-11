@@ -1,4 +1,4 @@
-package book.store.gui;
+package book.store.view;
 
 // import java.awt.Color;
 import java.awt.*;
@@ -12,6 +12,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 // import javax.swing.border.Border;
+
+import book.store.services.BookService;
 
 public class CreateBookPanel extends JPanel implements ActionListener{
 
@@ -124,9 +126,9 @@ public class CreateBookPanel extends JPanel implements ActionListener{
         String bookName = bookField.getText().trim().toUpperCase();
         String author = authorField.getText().trim().toUpperCase();
         String publisher = publisherField.getText().trim().toUpperCase();
-        String quantity = quantityField.getText();
+        int quantity = Integer.parseInt(quantityField.getText());
 
-        if (bookName.isEmpty() || author.isEmpty() || publisher.isEmpty() || quantity.isEmpty()) {
+        if (bookName.isEmpty() || author.isEmpty() || publisher.isEmpty() || quantity < 0) {
             successLabel.setForeground(Color.RED);
             successLabel.setText("FAILED TO SAVE THE BOOK");
             System.out.println("all data can't empty\nFailed to save the book!!!\n");
