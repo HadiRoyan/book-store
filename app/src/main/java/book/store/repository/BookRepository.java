@@ -1,10 +1,11 @@
 package book.store.repository;
 
 import book.store.entity.Book;
+import book.store.entity.Response;
 
 public interface BookRepository {
 
-    void save(Book book);
+    Response save(Book book);
 
     void delete(String bookName);
 

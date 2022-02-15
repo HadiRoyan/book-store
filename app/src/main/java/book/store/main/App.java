@@ -3,7 +3,7 @@
  */
 package book.store.main;
 
-import book.store.view.Login;
+import book.store.view.LoginView;
 
 public class App {
     public String getGreeting() {
@@ -11,6 +11,6 @@ public class App {
     }
 
     public static void main(String[] args) {
-        new Login();
+        new LoginView();
     }
 }

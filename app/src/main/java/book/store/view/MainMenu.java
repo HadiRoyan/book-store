@@ -1,5 +1,6 @@
 package book.store.view;
 
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -9,10 +10,13 @@ import javax.swing.SwingUtilities;
 
 import java.awt.*;
 import java.awt.event.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+//@Slf4j
 public class MainMenu implements ActionListener {
-    
-    private final static String TAG = "MainMenu, ";
+
+    private final Logger log = LoggerFactory.getLogger(MainMenu.class);
     private String user = "";
 
     private JFrame frame;
@@ -32,21 +36,15 @@ public class MainMenu implements ActionListener {
     DeleteBookPanel deletePanel = new DeleteBookPanel(user);
 
     public MainMenu(String user){
+        log.info(user + " success login");
         this.user = user;
-        SwingUtilities.invokeLater(new Runnable(){
-
-            @Override
-            public void run() {
-                setupUI();                
-            }
-            
-        });
+        SwingUtilities.invokeLater(this::setupUI);
     }
 
     private void setupUI(){
 
         // setup frame
-        System.out.println(TAG +"setup UI");
+        log.debug("setup UI");
         frame = new JFrame("BOOK APP STORE");
         frame.setSize(800,400);
         frame.setLocationRelativeTo(null);
@@ -88,7 +86,7 @@ public class MainMenu implements ActionListener {
 
         mainContainer.add(menuPanel, BorderLayout.WEST);
         mainContainer.add(mainPanel);
-        System.out.println(TAG +"setup UI done\n");
+        log.debug("setup UI done");
         frame.setVisible(true);
     }
 
@@ -104,7 +102,7 @@ public class MainMenu implements ActionListener {
             mainContainer.add(createPanel, BorderLayout.CENTER);
             mainContainer.repaint();
             mainContainer.revalidate();
-            System.out.println(TAG+"open create book panel\n");
+            log.info("open create book panel");
         }
 
         // read button (list Book)
@@ -117,7 +115,7 @@ public class MainMenu implements ActionListener {
             mainContainer.add(readPanel, BorderLayout.CENTER);
             mainContainer.repaint();
             mainContainer.revalidate();
-            System.out.println(TAG+"open read book panel\n");
+            log.info("open read book panel");
         }
 
         // update button (update book)
@@ -130,7 +128,7 @@ public class MainMenu implements ActionListener {
             mainContainer.add(updatePanel, BorderLayout.CENTER);
             mainContainer.repaint();
             mainContainer.revalidate();
-            System.out.println(TAG+"open update book panel\n");
+            log.info("open update book panel");
         }
 
         // delete button (delete book)
@@ -143,13 +141,13 @@ public class MainMenu implements ActionListener {
             mainContainer.add(deletePanel, BorderLayout.CENTER);
             mainContainer.repaint();
             mainContainer.revalidate();
-            System.out.println(TAG+"open delete book panel\n");
+            log.info("open delete book panel");
         }
 
         // logout button 
         if (e.getSource() == btnLogout) {
-            System.out.println(user +" LOGOUT\n");
-            new Login();
+            log.info(user + " Logout");
+            new LoginView();
             frame.dispose();
         }
     }

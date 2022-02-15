@@ -1,98 +1,106 @@
 package book.store.view;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 import book.store.entity.User;
 
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Login
  */
+//@Slf4j
 public class Login implements ActionListener {
 
-    private final static String TAG = "Login, ";
-
+    private final Logger log = LoggerFactory.getLogger(Login.class);
+    
     JFrame frame;
     JButton btnLogin;
     JButton btnExit;
+
     JPanel panel;
+    JPanel userNamePanel;
+    JPanel passwordPanel;
+    JPanel buttonPanel;
+    JPanel failPanel;
+
     JLabel userlabel;
     JLabel failLabel;
+
     JTextField inputUsername;
     JLabel passLabel;
     JPasswordField inputPassword;
-    public Login(){
-        
-        System.out.println(TAG+ "start Login");
-        SwingUtilities.invokeLater(new Runnable(){
 
-            @Override
-            public void run() {
-                setupUI();
-            }
-            
-        });
+    public Login(){
+        log.info("start login");
+        SwingUtilities.invokeLater(this::setupUI);
 
     }
 
     public void setupUI(){
-        System.out.println(TAG +"setup UI");
+        log.debug("setup UI");
         frame = new JFrame();
         panel = new JPanel();
+        userNamePanel = new JPanel(new GridLayout(1, 2, 4, 4));
+        passwordPanel = new JPanel();
+        buttonPanel = new JPanel();
+        failPanel = new JPanel();
 
-        panel.setLayout(null);
+
+        panel.setLayout(new GridLayout(4, 1));
         frame.setSize(600,280);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // username
         userlabel = new JLabel("USERNAME");
-        userlabel.setBounds(30,40,140,30);
-        panel.add(userlabel);
+        userNamePanel.add(userlabel, BorderLayout.WEST);
 
         inputUsername = new JTextField();
-        inputUsername.setBounds(250,40,230,30);
-        panel.add(inputUsername);
+        userNamePanel.add(inputUsername, BorderLayout.CENTER);
 
         // password 
         passLabel = new JLabel("PASSWORD");
-        passLabel.setBounds(30,80,140,30);
-        panel.add(passLabel);
+//        passLabel.setBounds(30,80,140,30);
+        passwordPanel.add(passLabel);
 
         inputPassword = new JPasswordField();
-        inputPassword.setBounds(250,80,230,30);
-        panel.add(inputPassword);
+//        inputPassword.setBounds(250,80,230,30);
+        passwordPanel.add(inputPassword);
         
         // button
         btnLogin = new JButton("LOGIN");
-        btnLogin.setBounds(30,130,90,30);
+        btnLogin.setAlignmentX(SwingConstants.LEFT);
+//        btnLogin.setBounds(30,130,90,30);
         btnLogin.addActionListener(this);
         // btnLogin.addKeyListener(inputPasswordKeyPressed(evt));
-        panel.add(btnLogin);
+        buttonPanel.add(btnLogin);
 
         btnExit = new JButton("EXIT");
-        btnExit.setBounds(350, 130, 90, 30);
+        btnLogin.setAlignmentX(SwingConstants.RIGHT);
+//        btnExit.setBounds(350, 130, 90, 30);
         btnExit.addActionListener(this);
-        panel.add(btnExit);
+        buttonPanel.add(btnExit);
 
         // fail label
         failLabel = new JLabel("");
-        failLabel.setBounds(30, 160, 350, 60);
+//        failLabel.setBounds(30, 160, 350, 60);
         // failLabel.setForeground(Color.RED);
-        panel.add(failLabel);
+        failPanel.add(failLabel);
+
+        panel.add(userNamePanel);
+        panel.add(passwordPanel);
+        panel.add(buttonPanel);
+        panel.add(failPanel);
 
         frame.add(panel);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        System.out.println(TAG +"setup UI done");
+        log.debug("setup UI done");
     }
 
     @Override
@@ -100,7 +108,7 @@ public class Login implements ActionListener {
         
         if (e.getSource() == btnLogin) {
             String user = inputUsername.getText().toUpperCase();
-            char pass[] = inputPassword.getPassword();
+            char[] pass = inputPassword.getPassword();
             
             if (user.isEmpty()) {
                 // failLabel.setText("USERNAME OR PASSWORD IS EMPTY");
@@ -112,7 +120,7 @@ public class Login implements ActionListener {
                 inputPassword.setText("");
             } else {
                 // success login
-                new User("",user, "");
+                new User(user, pass);
                 frame.dispose();
                 new MainMenu(user);
             }
@@ -120,7 +128,7 @@ public class Login implements ActionListener {
         }
 
         if (e.getSource() == btnExit) {
-            System.out.println("Exit.....!");
+            log.info("exit app");
             System.exit(0);
         }
     }
@@ -129,6 +137,5 @@ public class Login implements ActionListener {
         failLabel.setForeground(clr);
         failLabel.setText(message);
     }
-
    
 }

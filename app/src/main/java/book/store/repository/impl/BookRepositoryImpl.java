@@ -1,41 +1,48 @@
 package book.store.repository.impl;
 
 import book.store.entity.Book;
+import book.store.entity.Response;
 import book.store.repository.BookRepository;
+import book.store.util.DatabaseUtil;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+//@Slf4j
 public class BookRepositoryImpl implements BookRepository {
-
-    private DataSource dataSource;
-
-    public BookRepositoryImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
+    
+    private final Logger log = LoggerFactory.getLogger(BookRepositoryImpl.class);
 
     @Override
-    public void save(Book book) {
-        String sql = """
+    public Response save(Book book) {
+        if (!isBookExist(book.getName())) {
+            String sql = """
                 INSERT INTO book(name, author, publisher, quantity) VALUES(?, ?, ?, ?)
                 """;
-
-        try (
-                Connection connection = dataSource.getConnection();
-                PreparedStatement statement = connection.prepareStatement(sql)
-        ) {
-            statement.setString(1, book.getName());
-            statement.setString(2, book.getAuthor());
-            statement.setString(3, book.getPublisher());
-            statement.setInt(4, book.getQuantity());
-
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException();
+            try (
+                    Connection connection = new DatabaseUtil().getConnection();
+                    PreparedStatement statement = connection.prepareStatement(sql)
+            ) {
+                log.info("save book to database");
+                statement.setString(1, book.getName());
+                statement.setString(2, book.getAuthor());
+                statement.setString(3, book.getPublisher());
+                statement.setInt(4, book.getQuantity());
+                statement.executeUpdate();
+                
+                log.info("success save book " + book.getName());
+                return Response.SUCCESS; // Ok
+            } catch (SQLException e) {
+                log.error(e.getMessage(), e);
+                return Response.ERROR; // Error
+            }
+        } else {
+            log.info(book.getName() + " is already saved");
+            return Response.ERROR; // Error
         }
     }
 
@@ -46,13 +53,13 @@ public class BookRepositoryImpl implements BookRepository {
                     DELETE FROM book WHERE name=?
                     """;
             try (
-                    Connection connection = dataSource.getConnection();
+                    Connection connection = new DatabaseUtil().getConnection();
                     PreparedStatement statement = connection.prepareStatement(sql)
             ) {
                 statement.setString(1, bookName);
                 statement.executeUpdate();
             } catch (SQLException e) {
-                e.printStackTrace();
+                log.error(e.getMessage(), e);
             }
         }
     }
@@ -64,7 +71,7 @@ public class BookRepositoryImpl implements BookRepository {
                     SELECT id, name, author, publisher, quantity FROM book WHERE name=?
                     """;
             try (
-                    Connection connection = dataSource.getConnection();
+                    Connection connection = new DatabaseUtil().getConnection();
                     PreparedStatement statement = connection.prepareStatement(sql)
             ) {
                 statement.setString(1, bookName);
@@ -82,7 +89,8 @@ public class BookRepositoryImpl implements BookRepository {
 
                 return book;
             } catch (SQLException e) {
-                throw new RuntimeException();
+                log.error(e.getMessage(), e);
+                return null;
             }
         } else {
             return null;
@@ -95,21 +103,18 @@ public class BookRepositoryImpl implements BookRepository {
                 """;
 
         try (
-                Connection connection = dataSource.getConnection();
+                Connection connection = new DatabaseUtil().getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql)
         ) {
             statement.setString(1, bookName);
 
             try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return resultSet.next();
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException();
+            log.error(e.getMessage(), e);
+            return false;
         }
     }
 }

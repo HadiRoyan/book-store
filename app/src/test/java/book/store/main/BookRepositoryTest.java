@@ -3,13 +3,14 @@ package book.store.main;
 import book.store.entity.Book;
 import book.store.repository.BookRepository;
 import book.store.repository.impl.BookRepositoryImpl;
-import book.store.util.DatabaseUtil;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled
 public class BookRepositoryTest {
 
-    private BookRepository repository = new BookRepositoryImpl(DatabaseUtil.getDataSource());
-    private Book book = new Book("bcd", "dummy user", "CV APA AJA", 1);
+    private BookRepository repository = new BookRepositoryImpl();
+    private Book book = new Book("abc", "dummy user", "CV APA AJA", 1);
 
     @Test
     void testSave() {
@@ -23,7 +24,7 @@ public class BookRepositoryTest {
 
     @Test
     void testRead() {
-        Book book = repository.read("abc");
+        Book book = repository.read("bcd");
         System.out.println(book.getId());
         System.out.println(book.getName());
         System.out.println(book.getAuthor());

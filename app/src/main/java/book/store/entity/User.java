@@ -6,19 +6,35 @@ public class User {
 
     private int id;
     private String username;
-    private String password;
+    private char[] password;
     private String email;
+    private String hashPassword;
 
     public User() {
 
     }
 
-    public User(String email, String username, String password) {
+    public User(String email, String username, char[] password) {
         this.email = email;
         this.username = username;
         this.password = password;
     }
 
+    public User(String username, char[] password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public String getHashPassword() {
+        return hashPassword;
+    }
+
+    public void setHashPassword(String hashPassword) {
+        this.hashPassword = hashPassword;
+    }
+
+    
+    
     public int getId() {
         return id;
     }
@@ -35,11 +51,11 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
+    public char[] getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(char[] password) {
         this.password = password;
     }
 

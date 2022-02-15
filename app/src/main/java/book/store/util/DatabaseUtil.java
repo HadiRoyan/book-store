@@ -1,29 +1,29 @@
 package book.store.util;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+//@Slf4j
 public class DatabaseUtil {
 
-    public static HikariDataSource dataSource;
+    private final Logger log = LoggerFactory.getLogger(DatabaseUtil.class);
+    private Connection connection;
 
-    static {
-        HikariConfig configuration = new HikariConfig();
-        configuration.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        configuration.setUsername("root");
-        configuration.setPassword("root");
-        configuration.setJdbcUrl("jdbc:mysql://localhost:3306/book_store");
+    public Connection getConnection() {
 
-        // pool
-        configuration.setMaximumPoolSize(10);
-        configuration.setMinimumIdle(5);
-        configuration.setIdleTimeout(60_000);
-        configuration.setMaxLifetime(60 * 60 * 1000);
+        String jdbcUrl = "jdbc:mysql://localhost:3306/book_store";
+        String username = "root";
+        String password = "root";
 
-        dataSource = new HikariDataSource(configuration);
+        try {
+            connection = DriverManager.getConnection(jdbcUrl, username, password);
+        } catch (SQLException e) {
+            log.error(e.getMessage(), e);
+        }
+        return connection;
     }
 
-    public static HikariDataSource getDataSource() {
-        return dataSource;
-    }
 }

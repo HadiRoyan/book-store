@@ -13,11 +13,20 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 // import javax.swing.border.Border;
 
+import book.store.entity.Book;
+import book.store.entity.Response;
+import book.store.repository.BookRepository;
+import book.store.repository.impl.BookRepositoryImpl;
 import book.store.services.BookService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+//@Slf4j
 public class CreateBookPanel extends JPanel implements ActionListener{
 
-    private final static String TAG = "CreateBookPanel, ";
+    private final Logger log = LoggerFactory.getLogger(CreateBookPanel.class);
+    private final BookRepository repository = new BookRepositoryImpl();
+    private final BookService service = new BookService(repository);
 
     private JPanel mainPanel;
     private JPanel fieldPanel;
@@ -37,20 +46,16 @@ public class CreateBookPanel extends JPanel implements ActionListener{
     private JLabel publisherLabel;
     private JLabel quantityLabel;
     private JLabel successLabel;
-    
-    public CreateBookPanel(String user){
-        SwingUtilities.invokeLater(new Runnable(){
 
-            @Override
-            public void run() {
-               setupUI();
-            }
-            
-        });
+    public CreateBookPanel() {
+    }
+
+    public CreateBookPanel(String user){
+        SwingUtilities.invokeLater(this::setupUI);
     }
     
     private void setupUI(){
-        
+        log.debug("setup UI");
        
         // set the create book panel
         setLayout(new GridLayout(2,1));
@@ -116,12 +121,12 @@ public class CreateBookPanel extends JPanel implements ActionListener{
         // add main panel and submit panel create book panel
         add(mainPanel);
         add(submitPanel);
-        
+        log.debug("setup UI done");
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println(TAG +"On Click : submit button");
+        log.info("On Click : submit button");
 
         String bookName = bookField.getText().trim().toUpperCase();
         String author = authorField.getText().trim().toUpperCase();
@@ -130,14 +135,41 @@ public class CreateBookPanel extends JPanel implements ActionListener{
 
         if (bookName.isEmpty() || author.isEmpty() || publisher.isEmpty() || quantity < 0) {
             successLabel.setForeground(Color.RED);
-            successLabel.setText("FAILED TO SAVE THE BOOK");
-            System.out.println("all data can't empty\nFailed to save the book!!!\n");
+            successLabel.setText("please fill all data ");
+            log.error("Failed to save the book!!! data can't empty");
         }else{
-            successLabel.setForeground(Color.GREEN);
-            successLabel.setText("SUCCESSFULLY SAVE THE BOOK");
-            System.out.println(TAG+"book saved\n");
+            Book book = new Book(bookName, author, publisher, quantity);
+            var response = service.save(book);
+            
+            switch (response) {
+                case SUCCESS -> {
+                    successLabel.setForeground(Color.GREEN);
+                    successLabel.setText("SUCCESSFULLY SAVE THE BOOK");
+                    log.info("Response : "+ Response.SUCCESS.getDescription() + " - Success save book");
+                }
+                case ERROR -> {
+                    successLabel.setForeground(Color.RED);
+                    successLabel.setText("Something Failed, please try again!!!");
+                    
+                    log.info("Response : "+ Response.ERROR.getDescription() + " - FAILED save book");
+                }
+                default -> {
+                    successLabel.setForeground(Color.RED);
+                    successLabel.setText("SOMETHING WRONG, please try again!!!");
+                    
+                    log.info("Response : "+ Response.SUCCESS.getDescription() + " - FAILED save book");
+                }
+            }
         }
         
         
+    }
+
+    public JLabel getSuccessLabel() {
+        return this.successLabel;
+    }
+
+    public void setSuccessLabel(JLabel successLabel) {
+        this.successLabel = successLabel;
     }
 }
