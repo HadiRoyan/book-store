@@ -38,7 +38,8 @@ public class MainMenu implements ActionListener {
     public MainMenu(String user){
         log.info(user + " success login");
         this.user = user;
-        SwingUtilities.invokeLater(this::setupUI);
+//        SwingUtilities.invokeLater(this::setupUI);
+        setupUI();
     }
 
     private void setupUI(){
