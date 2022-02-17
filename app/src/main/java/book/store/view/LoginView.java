@@ -4,6 +4,7 @@
  */
 package book.store.view;
 
+import book.store.entity.Response;
 import java.util.Arrays;
 
 import org.slf4j.Logger;
@@ -12,10 +13,15 @@ import org.slf4j.LoggerFactory;
 import java.awt.Color;
 
 import book.store.entity.User;
+import book.store.repository.UserRepository;
+import book.store.repository.impl.UserRepositoryImpl;
+import book.store.services.UserService;
 
 public class LoginView extends javax.swing.JFrame {
 
     private final Logger log = LoggerFactory.getLogger(LoginView.class);
+    private UserRepository userRepository = new UserRepositoryImpl();
+    private UserService userService = new UserService(userRepository);
 
     public LoginView() {
         log.debug("setup UI");
@@ -158,21 +164,38 @@ public class LoginView extends javax.swing.JFrame {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         String username = usernameField.getText().toUpperCase();
-        char[] pass = passwordField.getPassword();
+        char[] password = passwordField.getPassword();
 
         if (username.isEmpty()) {
             // failLabel.setText("USERNAME OR PASSWORD IS EMPTY");
             setFailLabelText("USERNAME OR PASSWORD IS EMPTY", Color.RED);
-        } else if(pass.length < 8) {
+        } else if(password.length < 8) {
             // failLabel.setText("WRONG USERNAME OR PASSWORD");
             setFailLabelText("PASSWORD MUST BE greater than or equal to 8 CHARACTER", Color.RED);
             usernameField.setText("");
             passwordField.setText("");
         } else {
-        // success login
-            User user = new User(username, pass);
-            dispose();
-            new MainMenu(user.getUsername());
+            // success login
+            log.info("Request to Server: login [{}]", username);
+            var response = userService.login(username, Arrays.toString(password));
+            switch (response) {
+                case SUCCESS -> { // Ok
+                    log.info("Response from Server : "+ Response.SUCCESS +" - user is valid");
+                    dispose();
+                    new MainMenu(username);
+                }
+                case ERROR -> { // service error
+                    infoLabel.setText("USERNAME OR PASSWORD IS WRONG");
+                    infoLabel.setForeground(Color.RED);
+                    log.error("Response from Server: "+ Response.ERROR.getDescription() +" USERNAME OR PASSWORD IS WRONG");
+                }
+                default -> {
+                    infoLabel.setText("SOMETHING WRONG, Please try again");
+                    infoLabel.setForeground(Color.RED);
+                    log.error("SOMETHING WORNG!!!");
+                }
+            }
+            
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 

@@ -19,12 +19,8 @@ public class BookService {
     }
 
     public Response save(Book book) {
-        log.info("saving book : " + book.getName());
-        
-        var response = repository.save(book);
-        log.info("Response : "+ response);
-        
-        return response;
+        log.info("save book : {}", book.getName());
+        return repository.save(book);
     }
 
     public void read(String bookName) {

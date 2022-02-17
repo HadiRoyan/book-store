@@ -4,7 +4,7 @@ import book.store.entity.Response;
 import book.store.entity.User;
 import book.store.repository.UserRepository;
 import book.store.repository.impl.UserRepositoryImpl;
-import book.store.security.PasswordController;
+import book.store.security.Authencticator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,16 +19,34 @@ public class UserService {
     
     public Response signup(User user) {
         
-        String hash = PasswordController.hash(user.getPassword());
-        if (hash == null) {
-            log.error("Response : "+ Response.SUCCESS.getDescription() + " An exception occurred!", new NullPointerException());
-            return Response.ERROR; // bad request beacuse password is null
+        String[] encryptionPass = Authencticator.encryptPassword(user.getPassword());
+        user.setSalt(encryptionPass[0]);
+        user.setHashPassword(encryptionPass[1]);
+        log.info("Saving [user={}, password={}]",user.getUsername(), user.getHashPassword());
+        
+        var response = repository.createUser(user);
+        log.info("Response: "+ response);
+        
+        return response;
+    }
+    
+    public Response login(String username, String password) {
+        User user = repository.login(username);
+        
+        if (user != null) {
+            log.info("user is found trying to authenticate for username : {} ", user.getUsername());
+            boolean valid = Authencticator.authenticates(password, user);
+            log.info("authentication for username : {} = {}", user.getUsername(), valid);
+
+            if (valid) {
+                return Response.SUCCESS;
+            } else {
+                return Response.ERROR;
+            }
+        } else {
+            log.error("Failed to authentice user because {} is not found", username);
+            return Response.ERROR;
         }
         
-        user.setHashPassword(hash);
-        var response = repository.createUser(user);
-        
-        log.info("RESPONSE: "+ response);
-        return response;
     }
 }

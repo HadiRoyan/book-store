@@ -19,6 +19,7 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     public Response save(Book book) {
+        log.info("Request : save book");
         if (!isBookExist(book.getName())) {
             String sql = """
                 INSERT INTO book(name, author, publisher, quantity) VALUES(?, ?, ?, ?)
@@ -27,22 +28,21 @@ public class BookRepositoryImpl implements BookRepository {
                     Connection connection = new DatabaseUtil().getConnection();
                     PreparedStatement statement = connection.prepareStatement(sql)
             ) {
-                log.info("save book to database");
                 statement.setString(1, book.getName());
                 statement.setString(2, book.getAuthor());
                 statement.setString(3, book.getPublisher());
                 statement.setInt(4, book.getQuantity());
                 statement.executeUpdate();
                 
-                log.info("success save book " + book.getName());
+                log.info("Response : {}", Response.SUCCESS);
                 return Response.SUCCESS; // Ok
             } catch (SQLException e) {
-                log.error(e.getMessage(), e);
-                return Response.ERROR; // Error
+                log.error("Response : SERVER {}", Response.ERROR);
+                throw new RuntimeException(e.getMessage()); // Error
             }
         } else {
-            log.info(book.getName() + " is already saved");
-            return Response.ERROR; // Error
+            log.info("Response : Failed save book - Duplicate name book : {}", book.getName());
+            return Response.ERROR; // Cannot dupilcate book name
         }
     }
 
@@ -89,10 +89,11 @@ public class BookRepositoryImpl implements BookRepository {
 
                 return book;
             } catch (SQLException e) {
-                log.error(e.getMessage(), e);
-                return null;
+                log.error("Response : SERVER {}", Response.ERROR);
+                throw new RuntimeException(e.getMessage()); // Error
             }
         } else {
+            log.info("Response : Book is not found");
             return null;
         }
     }

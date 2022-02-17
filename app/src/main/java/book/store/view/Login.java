@@ -120,7 +120,7 @@ public class Login implements ActionListener {
                 inputPassword.setText("");
             } else {
                 // success login
-                new User(user, pass);
+                new User();
                 frame.dispose();
                 new MainMenu(user);
             }

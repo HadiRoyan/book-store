@@ -41,15 +41,23 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="titlleLabel" min="-2" pref="111" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="297" max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="userNameLabel1" min="-2" pref="90" max="-2" attributes="0"/>
                       <Component id="passwordLabel" min="-2" pref="90" max="-2" attributes="0"/>
                       <Component id="emailLabel" min="-2" pref="90" max="-2" attributes="0"/>
-                      <Component id="userNameLabel" min="-2" pref="90" max="-2" attributes="0"/>
+                      <Component id="nameLabel" min="-2" pref="90" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="infoLabel" max="32767" attributes="0"/>
+                      <Component id="nameField" pref="459" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="submitButton" min="-2" pref="97" max="-2" attributes="0"/>
                           <EmptySpace pref="265" max="32767" attributes="0"/>
@@ -58,14 +66,8 @@
                       <Component id="emailField" alignment="0" max="32767" attributes="0"/>
                       <Component id="passwordField" max="32767" attributes="0"/>
                       <Component id="usernameField" alignment="0" max="32767" attributes="0"/>
-                      <Component id="infoLabel" alignment="0" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="342" max="32767" attributes="0"/>
-                  <Component id="titlleLabel" min="-2" pref="111" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="297" max="-2" attributes="0"/>
+                  <EmptySpace pref="114" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -74,29 +76,34 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   <Component id="titlleLabel" min="-2" pref="28" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace pref="21" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="userNameLabel" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="nameLabel" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="nameField" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="userNameLabel1" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="usernameField" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="passwordLabel" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="emailField" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                      <Component id="passwordLabel" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="emailLabel" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="passwordField" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="submitButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="loginButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                  <EmptySpace pref="26" max="32767" attributes="0"/>
                   <Component id="infoLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="104" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -108,10 +115,10 @@
             <Property name="text" type="java.lang.String" value="EMAIL"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="userNameLabel">
+        <Component class="javax.swing.JLabel" name="nameLabel">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="USERNAME"/>
+            <Property name="text" type="java.lang.String" value="NAME"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="emailLabel">
@@ -157,10 +164,18 @@
             <Property name="text" type="java.lang.String" value="SIGN UP"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="infoLabel">
+        <Component class="javax.swing.JLabel" name="userNameLabel1">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="text" type="java.lang.String" value="USERNAME"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="nameField">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="2"/>
+          </Properties>
+        </Component>
+        <Component class="java.awt.Label" name="infoLabel">
         </Component>
       </SubComponents>
     </Container>

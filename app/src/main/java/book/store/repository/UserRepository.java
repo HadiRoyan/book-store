@@ -5,7 +5,7 @@ import book.store.entity.User;
 
 public interface UserRepository {
 
-    void login(String username, String password);
+    User login(String username);
 
     Response createUser(User user);
 }

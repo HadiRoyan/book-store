@@ -7,7 +7,9 @@ import book.store.util.DatabaseUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,30 +23,90 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void login(String username, String password) {
+    public User login(String username) {
+        log.info("Request : login");
+        if (isUserExist(username)) {
+            
+            String sql = """
+                     SELECT id, name, email, username, password, salt FROM user WHERE username= ? 
+                     """;
+            try (Connection connection = new DatabaseUtil().getConnection();
+                 PreparedStatement statement = connection.prepareStatement(sql)
+            ) {
+                statement.setString(1, username);
+                User user = new User();
+                try (ResultSet resultSet = statement.executeQuery()) {
 
+                    while(resultSet.next()) {
+                        user.setId(resultSet.getString("id"));
+                        user.setEmail(resultSet.getString("email"));
+                        user.setName(resultSet.getString("name"));
+                        user.setUsername(resultSet.getString("username"));
+                        user.setHashPassword(resultSet.getString("password"));
+                        user.setSalt(resultSet.getString("salt"));
+                    }
+                }
+                log.info("Response : {}", Response.SUCCESS.getDescription());
+                return user;
+            } catch (SQLException ex) {
+                log.error("Response : {}", Response.ERROR.name());
+                log.error(ex.getMessage(), ex);
+                return null;
+            }
+            
+        } else {
+            log.info("Response : user not found");
+            return null;
+        }
+        
+        
     }
 
     @Override
     public Response createUser(User user) {
-        log.info("open connection to database");
+        log.info("Request : Sign Up");
         String sql = """
-                INSERT INTO user(email, username, password) VALUES(?, ?, ?)
+                INSERT INTO user(id, name, email, username, password, salt) VALUES(?, ?, ?, ?, ?, ?) 
                 """;
 
         try (Connection connection = new DatabaseUtil().getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)
         ) {
-            statement.setString(1, user.getEmail());
-            statement.setString(2, user.getUsername());
-            statement.setString(3, user.getHashPassword());
+            statement.setString(1, user.getId());
+            statement.setString(2, user.getName());
+            statement.setString(3, user.getEmail());
+            statement.setString(4, user.getUsername());
+            statement.setString(5, user.getHashPassword());
+            statement.setString(6, user.getSalt());
 
             statement.executeUpdate();
-            log.info("success create user");
+            log.info("Response : {} - user created", Response.SUCCESS.getDescription());
             return Response.SUCCESS; // ok
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
             return Response.ERROR; // error
         }
     }
-}
+    
+    private boolean isUserExist(String username) {
+        String sql = """
+                SELECT username FROM user WHERE username= ? 
+                """;
+
+        try (Connection connection = new DatabaseUtil().getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)
+        ){
+            statement.setString(1, username);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+ 
+    }
+}       

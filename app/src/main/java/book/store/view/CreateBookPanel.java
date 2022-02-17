@@ -126,7 +126,7 @@ public class CreateBookPanel extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        log.info("On Click : submit button");
+        log.info("Request to server : save book");
 
         String bookName = bookField.getText().trim().toUpperCase();
         String author = authorField.getText().trim().toUpperCase();
@@ -145,19 +145,19 @@ public class CreateBookPanel extends JPanel implements ActionListener{
                 case SUCCESS -> {
                     successLabel.setForeground(Color.GREEN);
                     successLabel.setText("SUCCESSFULLY SAVE THE BOOK");
-                    log.info("Response : "+ Response.SUCCESS.getDescription() + " - Success save book");
+                    log.info("Response from server: "+ Response.SUCCESS.getDescription() + " - Success save book");
                 }
                 case ERROR -> {
                     successLabel.setForeground(Color.RED);
-                    successLabel.setText("Something Failed, please try again!!!");
+                    successLabel.setText("Book Name is already in database");
                     
-                    log.info("Response : "+ Response.ERROR.getDescription() + " - FAILED save book");
+                    log.info("Response from server: "+ Response.ERROR.getDescription() + " - FAILED save book");
                 }
                 default -> {
                     successLabel.setForeground(Color.RED);
                     successLabel.setText("SOMETHING WRONG, please try again!!!");
                     
-                    log.info("Response : "+ Response.SUCCESS.getDescription() + " - FAILED save book");
+                    log.info("Response from server: "+ Response.SUCCESS.getDescription() + " - FAILED save book");
                 }
             }
         }
