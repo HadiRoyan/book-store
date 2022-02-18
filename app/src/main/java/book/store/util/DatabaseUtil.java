@@ -15,11 +15,13 @@ public class DatabaseUtil {
     public Connection getConnection() {
 
         String jdbcUrl = "jdbc:mysql://localhost:3306/book_store";
+        String url = "jdbc:sqlite:book_store.db";
         String username = "root";
         String password = "root";
 
         try {
-            connection = DriverManager.getConnection(jdbcUrl, username, password);
+//            connection = DriverManager.getConnection(jdbcUrl, username, password);
+            connection = DriverManager.getConnection(url);
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
         }

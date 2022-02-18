@@ -15,7 +15,7 @@ public class UserServiceTest {
     private UserService userService = new UserService(userRepository);
     char[] password = "123456789".toCharArray();
     char[] passwordX = "salahuser".toCharArray();
-    User user = new User("tester", "tester@test.com", "tester", password);
+    User user = new User("tester", "tester@test.com", "new tester", password);
     
     @Test
     void testSignUp() {
@@ -25,7 +25,7 @@ public class UserServiceTest {
     
     @Test
     void testLogin() {
-        userService.login("tester", Arrays.toString(password));
+        userService.login("new tester", Arrays.toString(password));
     }
     
     @Test
@@ -35,6 +35,6 @@ public class UserServiceTest {
     
     @Test
     void testLoginWrongPassword() {
-        userService.login("tester", Arrays.toString(passwordX));
+        userService.login("new tester", Arrays.toString(passwordX));
     }
 }

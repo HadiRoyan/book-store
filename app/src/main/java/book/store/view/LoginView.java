@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import java.awt.Color;
 
-import book.store.entity.User;
 import book.store.repository.UserRepository;
 import book.store.repository.impl.UserRepositoryImpl;
 import book.store.services.UserService;
@@ -51,12 +50,13 @@ public class LoginView extends javax.swing.JFrame {
         exitButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(750, 400));
         setSize(new java.awt.Dimension(750, 400));
 
+        userNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         userNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         userNameLabel.setText("USERNAME");
 
+        emailLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         emailLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         emailLabel.setText("PASSWORD");
 
@@ -67,8 +67,10 @@ public class LoginView extends javax.swing.JFrame {
             }
         });
 
+        usernameField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         usernameField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
+        passwordField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         passwordField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
         loginButton.setText("LOGIN");
@@ -81,6 +83,7 @@ public class LoginView extends javax.swing.JFrame {
         titlleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titlleLabel.setText("LOGIN");
 
+        infoLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         infoLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         exitButton.setText("EXIT");
@@ -107,15 +110,14 @@ public class LoginView extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(infoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(signupButton, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
-                                    .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(78, 78, 78)
-                                    .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(passwordField, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(usernameField, javax.swing.GroupLayout.Alignment.LEADING)))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(signupButton, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                                .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(78, 78, 78)
+                                .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(passwordField)
+                            .addComponent(usernameField))))
                 .addContainerGap(114, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -163,7 +165,7 @@ public class LoginView extends javax.swing.JFrame {
     }//GEN-LAST:event_signupButtonActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        String username = usernameField.getText().toUpperCase();
+        String username = usernameField.getText();
         char[] password = passwordField.getPassword();
 
         if (username.isEmpty()) {
@@ -177,23 +179,16 @@ public class LoginView extends javax.swing.JFrame {
         } else {
             // success login
             log.info("Request to Server: login [{}]", username);
-            var response = userService.login(username, Arrays.toString(password));
-            switch (response) {
-                case SUCCESS -> { // Ok
-                    log.info("Response from Server : "+ Response.SUCCESS +" - user is valid");
-                    dispose();
-                    new MainMenu(username);
-                }
-                case ERROR -> { // service error
-                    infoLabel.setText("USERNAME OR PASSWORD IS WRONG");
-                    infoLabel.setForeground(Color.RED);
-                    log.error("Response from Server: "+ Response.ERROR.getDescription() +" USERNAME OR PASSWORD IS WRONG");
-                }
-                default -> {
-                    infoLabel.setText("SOMETHING WRONG, Please try again");
-                    infoLabel.setForeground(Color.RED);
-                    log.error("SOMETHING WORNG!!!");
-                }
+            var user = userService.login(username, Arrays.toString(password));
+            
+            if (user != null) {
+                log.info("Response from Server : "+ Response.SUCCESS +" - user is valid");
+                dispose();
+                new MenuFrame(user);
+            } else {
+                infoLabel.setText("USERNAME OR PASSWORD IS WRONG");
+                infoLabel.setForeground(Color.RED);
+                log.error("Response from Server: "+ Response.ERROR.getDescription() +" USERNAME OR PASSWORD IS WRONG");
             }
             
         }

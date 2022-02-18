@@ -46,7 +46,7 @@ public class UserRepositoryImpl implements UserRepository {
                         user.setSalt(resultSet.getString("salt"));
                     }
                 }
-                log.info("Response : {}", Response.SUCCESS.getDescription());
+                log.info("Response : ok - {}", user.toString());
                 return user;
             } catch (SQLException ex) {
                 log.error("Response : {}", Response.ERROR.name());

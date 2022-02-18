@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 public class BookRepositoryTest {
 
     private BookRepository repository = new BookRepositoryImpl();
-    private Book book = new Book("abc", "dummy user", "CV APA AJA", 1);
+    private Book book = new Book("bcd", "dummy user", "CV APA AJA", 1);
 
     @Test
     void testSave() {

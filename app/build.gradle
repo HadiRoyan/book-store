@@ -24,10 +24,10 @@ dependencies {
     implementation 'com.google.guava:guava:30.1.1-jre'
 
     // connector for mysql
-    implementation 'mysql:mysql-connector-java:8.0.28'
+   //  implementation 'mysql:mysql-connector-java:8.0.28'
 
-    // connection pool
-    implementation 'com.zaxxer:HikariCP:5.0.1'
+    // driver sqlite
+    implementation 'org.xerial:sqlite-jdbc:3.36.0.3'
 
     // logging
     implementation 'ch.qos.logback:logback-classic:1.2.8'

@@ -30,7 +30,7 @@ public class UserService {
         return response;
     }
     
-    public Response login(String username, String password) {
+    public User login(String username, String password) {
         User user = repository.login(username);
         
         if (user != null) {
@@ -39,13 +39,13 @@ public class UserService {
             log.info("authentication for username : {} = {}", user.getUsername(), valid);
 
             if (valid) {
-                return Response.SUCCESS;
+                return user;
             } else {
-                return Response.ERROR;
+                return null;
             }
         } else {
             log.error("Failed to authentice user because {} is not found", username);
-            return Response.ERROR;
+            return null;
         }
         
     }
