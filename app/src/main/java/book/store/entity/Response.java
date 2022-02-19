@@ -6,7 +6,8 @@ package book.store.entity;
 
 public enum Response {
     SUCCESS("Ok"),
-    ERROR("Something Failed");
+    FAILED("FAILED"),
+    ERROR("ERROR");
 
     private String description;
 

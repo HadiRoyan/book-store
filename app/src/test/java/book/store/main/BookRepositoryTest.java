@@ -6,11 +6,10 @@ import book.store.repository.impl.BookRepositoryImpl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-@Disabled
 public class BookRepositoryTest {
 
     private BookRepository repository = new BookRepositoryImpl();
-    private Book book = new Book("bcd", "dummy user", "CV APA AJA", 1);
+    private Book book = new Book("abc", "dummy user", "CV APA AJA", 1);
 
     @Test
     void testSave() {

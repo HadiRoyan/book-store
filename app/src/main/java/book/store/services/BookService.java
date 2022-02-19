@@ -23,11 +23,20 @@ public class BookService {
         return repository.save(book);
     }
 
-    public void read(String bookName) {
-        repository.read(bookName);
+    public Book read(String bookName) {
+        log.debug("search book : {}", bookName);
+        var book = repository.read(bookName);
+        
+        if (book != null) {
+            log.info("Book found");
+            return book;
+        } else {
+            log.info("book is not found");
+            return null;
+        }
     }
 
-    public void delete(String bookName) {
-        repository.delete(bookName);
+    public Response delete(String bookName) {
+        return repository.delete(bookName);
     }
 }

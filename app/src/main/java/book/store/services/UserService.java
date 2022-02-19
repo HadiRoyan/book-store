@@ -41,12 +41,15 @@ public class UserService {
             if (valid) {
                 return user;
             } else {
-                return null;
+                return new User();
             }
         } else {
             log.error("Failed to authentice user because {} is not found", username);
             return null;
         }
-        
+    }
+    
+    public Response delete(String username) {
+        return repository.deleteUser(username);
     }
 }

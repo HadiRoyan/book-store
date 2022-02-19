@@ -1,15 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package book.store.view;
 
 import book.store.entity.Book;
 import book.store.entity.Response;
 import book.store.entity.User;
 import book.store.repository.BookRepository;
+import book.store.repository.UserRepository;
 import book.store.repository.impl.BookRepositoryImpl;
+import book.store.repository.impl.UserRepositoryImpl;
 import book.store.services.BookService;
+import book.store.services.UserService;
 import java.awt.CardLayout;
 import java.awt.Color;
 import org.slf4j.Logger;
@@ -22,8 +21,10 @@ import org.slf4j.LoggerFactory;
 public class MenuFrame extends javax.swing.JFrame {
 
     private final Logger log = LoggerFactory.getLogger(MenuFrame.class);
-    private final BookRepository repository = new BookRepositoryImpl();
-    private final BookService service = new BookService(repository);
+    private final BookRepository bookRepository = new BookRepositoryImpl();
+    private final BookService bookService = new BookService(bookRepository);
+    private final UserRepository userRepository = new UserRepositoryImpl();
+    private final UserService userService = new UserService(userRepository);
     private User user;
 
     CardLayout cardLayout;
@@ -47,12 +48,12 @@ public class MenuFrame extends javax.swing.JFrame {
 
         jSplitPane2 = new javax.swing.JSplitPane();
         panelMenu = new javax.swing.JPanel();
-        btnExit = new java.awt.Button();
         btnUpdate = new java.awt.Button();
         btnSave = new java.awt.Button();
         btnFind = new java.awt.Button();
         btnDelete = new java.awt.Button();
-        btnAccountLabel = new javax.swing.JLabel();
+        btnAccount = new javax.swing.JButton();
+        btnLogout = new javax.swing.JButton();
         panelData = new javax.swing.JPanel();
         panelSave = new javax.swing.JPanel();
         saveLabel = new java.awt.Label();
@@ -67,6 +68,21 @@ public class MenuFrame extends javax.swing.JFrame {
         btnSubmit = new javax.swing.JButton();
         labelInfo = new javax.swing.JLabel();
         panelDelete = new javax.swing.JPanel();
+        deleteTitle = new javax.swing.JLabel();
+        deleteNameInputLabel = new javax.swing.JLabel();
+        deleteBookINameInput = new javax.swing.JTextField();
+        deleteFindBtn = new javax.swing.JButton();
+        deleteInfoSearch = new javax.swing.JLabel();
+        deleteAuthorLabel = new javax.swing.JLabel();
+        deleteNameLabel = new javax.swing.JLabel();
+        deletePublisherLabel = new javax.swing.JLabel();
+        deleteQuantityLabel = new javax.swing.JLabel();
+        deleteNameBookLabel = new javax.swing.JLabel();
+        deleteAuthorBookLabel = new javax.swing.JLabel();
+        deletePubllisherBookLabel = new javax.swing.JLabel();
+        deleteQuantityBookLabel = new javax.swing.JLabel();
+        deleteBookBtn = new javax.swing.JButton();
+        deleteInfoLabel = new javax.swing.JLabel();
         panelFind = new javax.swing.JPanel();
         panelUpdate = new javax.swing.JPanel();
         panelAccount = new javax.swing.JPanel();
@@ -74,11 +90,13 @@ public class MenuFrame extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         emailAccountField = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        accountIdFiield = new javax.swing.JLabel();
+        accountIdField = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         nameAccountField = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         usernameAccountField = new javax.swing.JLabel();
+        btnDeleteUser = new javax.swing.JButton();
+        infoDeleteAcct = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("menuFrame"); // NOI18N
@@ -86,19 +104,6 @@ public class MenuFrame extends javax.swing.JFrame {
         panelMenu.setBackground(new java.awt.Color(0, 0, 255));
         panelMenu.setName("panelMenu"); // NOI18N
         panelMenu.setPreferredSize(new java.awt.Dimension(300, 600));
-
-        btnExit.setActionCommand("btnExit");
-        btnExit.setBackground(new java.awt.Color(0, 0, 255));
-        btnExit.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnExit.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        btnExit.setForeground(new java.awt.Color(255, 255, 255));
-        btnExit.setLabel("EXIT");
-        btnExit.setPreferredSize(new java.awt.Dimension(200, 65));
-        btnExit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExitActionPerformed(evt);
-            }
-        });
 
         btnUpdate.setActionCommand("btnUpdate");
         btnUpdate.setBackground(new java.awt.Color(0, 0, 255));
@@ -151,15 +156,25 @@ public class MenuFrame extends javax.swing.JFrame {
             }
         });
 
-        btnAccountLabel.setBackground(new java.awt.Color(0, 0, 0));
-        btnAccountLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnAccountLabel.setForeground(new java.awt.Color(255, 255, 255));
-        btnAccountLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnAccountLabel.setText("ME");
-        btnAccountLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnAccountLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAccountLabelMouseClicked(evt);
+        btnAccount.setBackground(new java.awt.Color(0, 0, 255));
+        btnAccount.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnAccount.setForeground(new java.awt.Color(255, 255, 255));
+        btnAccount.setBorder(null);
+        btnAccount.setLabel("ME");
+        btnAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAccountActionPerformed(evt);
+            }
+        });
+
+        btnLogout.setBackground(new java.awt.Color(0, 0, 255));
+        btnLogout.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnLogout.setForeground(new java.awt.Color(0, 0, 0));
+        btnLogout.setText("LOGOUT");
+        btnLogout.setBorder(null);
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
             }
         });
 
@@ -169,21 +184,22 @@ public class MenuFrame extends javax.swing.JFrame {
             panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelMenuLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
-                .addGroup(panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(panelMenuLayout.createSequentialGroup()
-                        .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFind, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addComponent(btnAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnFind, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(50, 50, 50))
         );
         panelMenuLayout.setVerticalGroup(
             panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMenuLayout.createSequentialGroup()
-                .addContainerGap(62, Short.MAX_VALUE)
+                .addGap(50, 50, 50)
                 .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -191,14 +207,13 @@ public class MenuFrame extends javax.swing.JFrame {
                 .addComponent(btnFind, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(90, 90, 90)
-                .addGroup(panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                .addGroup(panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(90, 90, 90))
         );
 
-        btnExit.getAccessibleContext().setAccessibleName("btnExit");
         btnUpdate.getAccessibleContext().setAccessibleName("btnUpdate");
         btnFind.getAccessibleContext().setAccessibleName("btnFind");
         btnDelete.getAccessibleContext().setAccessibleName("btnDelete");
@@ -211,7 +226,7 @@ public class MenuFrame extends javax.swing.JFrame {
 
         saveLabel.setAlignment(java.awt.Label.CENTER);
         saveLabel.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        saveLabel.setText("SAVE BOOK");
+        saveLabel.setText("Save Book");
 
         quantityLabel.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         quantityLabel.setText("Quantity");
@@ -264,7 +279,7 @@ public class MenuFrame extends javax.swing.JFrame {
         panelSaveLayout.setHorizontalGroup(
             panelSaveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelSaveLayout.createSequentialGroup()
-                .addContainerGap(352, Short.MAX_VALUE)
+                .addContainerGap(412, Short.MAX_VALUE)
                 .addComponent(saveLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(343, 343, 343))
             .addGroup(panelSaveLayout.createSequentialGroup()
@@ -315,17 +330,141 @@ public class MenuFrame extends javax.swing.JFrame {
 
         panelData.add(panelSave, "panelSave");
 
-        panelDelete.setBackground(new java.awt.Color(204, 204, 0));
+        panelDelete.setBackground(new java.awt.Color(255, 255, 255));
+        panelDelete.setForeground(new java.awt.Color(0, 0, 0));
+
+        deleteTitle.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        deleteTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        deleteTitle.setText("Delete Book");
+        deleteTitle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        deleteNameInputLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        deleteNameInputLabel.setText("Book Name");
+
+        deleteBookINameInput.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        deleteFindBtn.setBackground(new java.awt.Color(255, 255, 255));
+        deleteFindBtn.setText("Search");
+        deleteFindBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        deleteFindBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteFindBtnActionPerformed(evt);
+            }
+        });
+
+        deleteInfoSearch.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        deleteInfoSearch.setText("Find the book you want to delete");
+
+        deleteAuthorLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        deleteAuthorLabel.setText("Auhtor");
+
+        deleteNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        deleteNameLabel.setText("Book Name");
+
+        deletePublisherLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        deletePublisherLabel.setText("Publishser");
+
+        deleteQuantityLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        deleteQuantityLabel.setText("Quantity");
+
+        deleteNameBookLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        deleteAuthorBookLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        deletePubllisherBookLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        deleteQuantityBookLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        deleteBookBtn.setBackground(new java.awt.Color(255, 255, 255));
+        deleteBookBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        deleteBookBtn.setForeground(new java.awt.Color(0, 0, 0));
+        deleteBookBtn.setText("DELETE");
+        deleteBookBtn.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(255, 255, 255), new java.awt.Color(0, 0, 0)));
+        deleteBookBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBookBtnActionPerformed(evt);
+            }
+        });
+
+        deleteInfoLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout panelDeleteLayout = new javax.swing.GroupLayout(panelDelete);
         panelDelete.setLayout(panelDeleteLayout);
         panelDeleteLayout.setHorizontalGroup(
             panelDeleteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 895, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDeleteLayout.createSequentialGroup()
+                .addContainerGap(390, Short.MAX_VALUE)
+                .addComponent(deleteTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(365, Short.MAX_VALUE))
+            .addGroup(panelDeleteLayout.createSequentialGroup()
+                .addGap(136, 136, 136)
+                .addGroup(panelDeleteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelDeleteLayout.createSequentialGroup()
+                        .addComponent(deletePublisherLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(deletePubllisherBookLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelDeleteLayout.createSequentialGroup()
+                        .addComponent(deleteAuthorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(deleteAuthorBookLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelDeleteLayout.createSequentialGroup()
+                        .addGroup(panelDeleteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(deleteNameInputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(deleteNameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelDeleteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelDeleteLayout.createSequentialGroup()
+                                .addGroup(panelDeleteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(deleteInfoSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(deleteBookINameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(40, 40, 40)
+                                .addComponent(deleteFindBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(deleteNameBookLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelDeleteLayout.createSequentialGroup()
+                        .addComponent(deleteQuantityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(panelDeleteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(panelDeleteLayout.createSequentialGroup()
+                                .addComponent(deleteBookBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(deleteInfoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(deleteQuantityBookLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelDeleteLayout.setVerticalGroup(
             panelDeleteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addGroup(panelDeleteLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(panelDeleteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelDeleteLayout.createSequentialGroup()
+                        .addComponent(deleteTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(panelDeleteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(deleteNameInputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(deleteBookINameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(deleteFindBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(deleteInfoSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(panelDeleteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(deleteNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(deleteNameBookLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(panelDeleteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(deleteAuthorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(deleteAuthorBookLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(deletePublisherLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(deletePubllisherBookLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelDeleteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(deleteQuantityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deleteQuantityBookLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(panelDeleteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(deleteBookBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(deleteInfoLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(164, Short.MAX_VALUE))
         );
 
         panelData.add(panelDelete, "panelDelete");
@@ -337,7 +476,7 @@ public class MenuFrame extends javax.swing.JFrame {
         panelFind.setLayout(panelFindLayout);
         panelFindLayout.setHorizontalGroup(
             panelFindLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 895, Short.MAX_VALUE)
+            .addGap(0, 955, Short.MAX_VALUE)
         );
         panelFindLayout.setVerticalGroup(
             panelFindLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -353,7 +492,7 @@ public class MenuFrame extends javax.swing.JFrame {
         panelUpdate.setLayout(panelUpdateLayout);
         panelUpdateLayout.setHorizontalGroup(
             panelUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 895, Short.MAX_VALUE)
+            .addGap(0, 955, Short.MAX_VALUE)
         );
         panelUpdateLayout.setVerticalGroup(
             panelUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -376,7 +515,7 @@ public class MenuFrame extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setText("Id");
 
-        accountIdFiield.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        accountIdField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel6.setText("Name");
@@ -387,6 +526,18 @@ public class MenuFrame extends javax.swing.JFrame {
         jLabel8.setText("Username");
 
         usernameAccountField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        btnDeleteUser.setBackground(new java.awt.Color(255, 255, 255));
+        btnDeleteUser.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnDeleteUser.setText("DELETE ACCOUNT");
+        btnDeleteUser.setBorder(null);
+        btnDeleteUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteUserActionPerformed(evt);
+            }
+        });
+
+        infoDeleteAcct.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
         javax.swing.GroupLayout panelAccountLayout = new javax.swing.GroupLayout(panelAccount);
         panelAccount.setLayout(panelAccountLayout);
@@ -401,24 +552,29 @@ public class MenuFrame extends javax.swing.JFrame {
                         .addGap(146, 146, 146)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(accountIdFiield, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(accountIdField, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelAccountLayout.createSequentialGroup()
                         .addGap(146, 146, 146)
                         .addGroup(panelAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panelAccountLayout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(emailAccountField, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panelAccountLayout.createSequentialGroup()
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(nameAccountField, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(nameAccountField, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelAccountLayout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(panelAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(infoDeleteAcct, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+                                    .addComponent(emailAccountField, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)))))
                     .addGroup(panelAccountLayout.createSequentialGroup()
                         .addGap(146, 146, 146)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(usernameAccountField, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(111, Short.MAX_VALUE))
+                        .addComponent(usernameAccountField, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelAccountLayout.createSequentialGroup()
+                        .addGap(380, 380, 380)
+                        .addComponent(btnDeleteUser, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(171, Short.MAX_VALUE))
         );
         panelAccountLayout.setVerticalGroup(
             panelAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -427,7 +583,7 @@ public class MenuFrame extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50)
                 .addGroup(panelAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(accountIdFiield, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(accountIdField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(panelAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -443,7 +599,11 @@ public class MenuFrame extends javax.swing.JFrame {
                         .addComponent(usernameAccountField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(emailAccountField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(270, Short.MAX_VALUE))
+                .addGap(70, 70, 70)
+                .addComponent(btnDeleteUser, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(infoDeleteAcct, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(92, Short.MAX_VALUE))
         );
 
         panelData.add(panelAccount, "panelAccount");
@@ -466,12 +626,6 @@ public class MenuFrame extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        log.info("{} logout", user.getUsername());
-        dispose();
-        new LoginView();
-    }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         cardLayout.show(panelData, "panelSave");
@@ -515,7 +669,7 @@ public class MenuFrame extends javax.swing.JFrame {
             log.error("Failed to save the book!!! data can't empty");
         }else{
             Book book = new Book(bookName, author, publisher, quantity);
-            var response = service.save(book);
+            var response = bookService.save(book);
             
             switch (response) {
                 case SUCCESS -> {
@@ -539,26 +693,128 @@ public class MenuFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSubmitActionPerformed
 
-    private void btnAccountLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAccountLabelMouseClicked
-       cardLayout.show(panelData, "panelAccount");
-       accountIdFiield.setText(user.getId());
-       nameAccountField.setText(user.getName());
-       usernameAccountField.setText(user.getUsername());
-       emailAccountField.setText(user.getEmail());
-    }//GEN-LAST:event_btnAccountLabelMouseClicked
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+       log.info("{} logout", user.getUsername());
+       dispose();
+       new LoginView();
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
+    private void btnAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccountActionPerformed
+        accountIdField.setText(user.getId());
+        nameAccountField.setText(user.getName());
+        usernameAccountField.setText(user.getUsername());
+        emailAccountField.setText(user.getEmail());
+        cardLayout.show(panelData, "panelAccount");
+    }//GEN-LAST:event_btnAccountActionPerformed
+
+    private void btnDeleteUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteUserActionPerformed
+        log.info("Request : delete account");
+        var response = userService.delete(user.getUsername());
+        switch (response) {
+            case SUCCESS -> {
+                log.info("Response : {}", Response.SUCCESS);
+                infoDeleteAcct.setText("SUCCESS DELETED ACCOUNT, PLEASE LOGIN AGAIN!!!");
+            }
+            case FAILED -> { 
+                log.info("Response : {}", Response.FAILED);
+                infoDeleteAcct.setText("FAILED DELETED ACCOUNT, USER IS NOT FOUND");
+            }
+            case ERROR -> {
+                log.info("Response : {}", Response.ERROR);
+                infoDeleteAcct.setText("ERROR WHILE DELETE ACCOUNT, PLEASE TRY AGAIN LATER");
+            }
+        }
+    }//GEN-LAST:event_btnDeleteUserActionPerformed
+
+    private void deleteFindBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFindBtnActionPerformed
+        String bookName = deleteBookINameInput.getText().trim().toUpperCase();
+        
+        if (!bookName.isBlank()) {
+            log.info("Request : Search book = {}", bookName);
+            Book book = bookService.read(bookName);
+            if (book != null) {
+                log.info("Response : Book Found");
+                deleteInfoLabel.setText("");
+                deleteNameBookLabel.setText(book.getName());
+                deleteAuthorBookLabel.setText(book.getAuthor());
+                deletePubllisherBookLabel.setText(book.getPublisher());
+                deleteQuantityBookLabel.setText(String.valueOf(book.getQuantity()));
+            } else {
+                log.info("Response : Book is not found");
+                deleteNameBookLabel.setText("");
+                deleteAuthorBookLabel.setText("");
+                deletePubllisherBookLabel.setText("");
+                deleteQuantityBookLabel.setText("0");
+                deleteInfoLabel.setText("BOOK NOT FOUND");
+                deleteInfoLabel.setForeground(Color.RED);
+            }
+        } else {
+            log.info("FIELD IS EMPTY", Response.FAILED.name());
+            deleteInfoLabel.setText("Search Field Cannot Be Empty");
+            deleteInfoLabel.setForeground(Color.RED);
+        }
+        
+    }//GEN-LAST:event_deleteFindBtnActionPerformed
+
+    private void deleteBookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBookBtnActionPerformed
+        String bookName = deleteNameBookLabel.getText();
+        if (!bookName.isBlank()) {
+            log.info("Request : delete book = {}", bookName);
+            var response = bookService.delete(bookName);
+            switch (response) {
+                case SUCCESS -> {
+                    log.info("Response : {}", Response.SUCCESS.name());
+                    deleteInfoLabel.setText("Book deleted successfully");
+                    deleteInfoLabel.setForeground(Color.GREEN);
+                }
+                case FAILED -> {
+                    log.info("Response : {} - Book not found", Response.FAILED.name());
+                    deleteInfoLabel.setText("Book not found");
+                    deleteInfoLabel.setForeground(Color.RED);
+                }
+                case ERROR -> {
+                    log.info("Response : {}", Response.ERROR.name());
+                    deleteInfoLabel.setText("Something error. The book failed to delete");
+                    deleteInfoLabel.setForeground(Color.RED);
+                }
+                default -> throw new AssertionError();
+            }
+        } else {
+            log.info("FIELD IS EMPTY", Response.FAILED.name());
+            deleteInfoLabel.setText("Search Field Cannot Be Empty");
+            deleteInfoLabel.setForeground(Color.RED);
+        }
+    }//GEN-LAST:event_deleteBookBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel accountIdFiield;
+    private javax.swing.JLabel accountIdField;
     private javax.swing.JTextField auhtorField;
     private java.awt.Label authorLabel1;
-    private javax.swing.JLabel btnAccountLabel;
+    private javax.swing.JButton btnAccount;
     private java.awt.Button btnDelete;
-    private java.awt.Button btnExit;
+    private javax.swing.JButton btnDeleteUser;
     private java.awt.Button btnFind;
+    private javax.swing.JButton btnLogout;
     private java.awt.Button btnSave;
     private javax.swing.JButton btnSubmit;
     private java.awt.Button btnUpdate;
+    private javax.swing.JLabel deleteAuthorBookLabel;
+    private javax.swing.JLabel deleteAuthorLabel;
+    private javax.swing.JButton deleteBookBtn;
+    private javax.swing.JTextField deleteBookINameInput;
+    private javax.swing.JButton deleteFindBtn;
+    private javax.swing.JLabel deleteInfoLabel;
+    private javax.swing.JLabel deleteInfoSearch;
+    private javax.swing.JLabel deleteNameBookLabel;
+    private javax.swing.JLabel deleteNameInputLabel;
+    private javax.swing.JLabel deleteNameLabel;
+    private javax.swing.JLabel deletePublisherLabel;
+    private javax.swing.JLabel deletePubllisherBookLabel;
+    private javax.swing.JLabel deleteQuantityBookLabel;
+    private javax.swing.JLabel deleteQuantityLabel;
+    private javax.swing.JLabel deleteTitle;
     private javax.swing.JLabel emailAccountField;
+    private javax.swing.JLabel infoDeleteAcct;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;

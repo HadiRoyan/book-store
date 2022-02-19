@@ -133,19 +133,12 @@ public class User {
         }
         return Arrays.equals(this.password, other.password);
     }
-
     
-    
-
     @Override
     public String toString() {
         return "User{" + "id=" + id + 
                 ", name=" + name + 
                 ", username=" + username + 
-                ", email=" + email + 
-                ", hashPassword=" + hashPassword + 
-                ", salt=" + salt + '}';
+                ", email=" + email + '}';
     }
-    
-    
 }

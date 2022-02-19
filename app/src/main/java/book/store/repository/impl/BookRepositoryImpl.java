@@ -47,7 +47,8 @@ public class BookRepositoryImpl implements BookRepository {
     }
 
     @Override
-    public void delete(String bookName) {
+    public Response delete(String bookName) {
+        log.info("Request : delete book");
         if (isBookExist(bookName)) {
             String sql = """
                     DELETE FROM book WHERE name=?
@@ -58,9 +59,15 @@ public class BookRepositoryImpl implements BookRepository {
             ) {
                 statement.setString(1, bookName);
                 statement.executeUpdate();
+                log.info("Response : {}", Response.SUCCESS);
+                return Response.SUCCESS;
             } catch (SQLException e) {
                 log.error(e.getMessage(), e);
+                return Response.ERROR;
             }
+        } else {
+            log.info("Response : {} - book not found", Response.FAILED);
+            return Response.FAILED;
         }
     }
 

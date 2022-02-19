@@ -6,6 +6,7 @@ import book.store.repository.impl.UserRepositoryImpl;
 import book.store.services.UserService;
 import java.util.Arrays;
 import java.util.UUID;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,7 @@ public class UserServiceTest {
     private UserService userService = new UserService(userRepository);
     char[] password = "123456789".toCharArray();
     char[] passwordX = "salahuser".toCharArray();
-    User user = new User("tester", "tester@test.com", "new tester", password);
+    User user = new User("tester", "tester@test.com", "tester", password);
     
     @Test
     void testSignUp() {
@@ -25,16 +26,26 @@ public class UserServiceTest {
     
     @Test
     void testLogin() {
-        userService.login("new tester", Arrays.toString(password));
+        var user = userService.login("tester", Arrays.toString(password));
+        System.out.println(user.toString());
     }
     
     @Test
     void testLoginFailed() {
-        userService.login("testerx", Arrays.toString(password));
+         var user = userService.login("testerx", Arrays.toString(password));
+         System.out.println(user.toString());
     }
     
     @Test
     void testLoginWrongPassword() {
-        userService.login("new tester", Arrays.toString(passwordX));
+         var user = userService.login("tester", Arrays.toString(passwordX));
+         System.out.println(user.toString());
+    }
+    
+    
+    @Test
+    void testDeleteSuccess() {
+        var response = userService.delete("new tester");
+        Assertions.assertEquals(response.SUCCESS, response);
     }
 }

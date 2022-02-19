@@ -7,7 +7,7 @@ public interface BookRepository {
 
     Response save(Book book);
 
-    void delete(String bookName);
+    Response delete(String bookName);
 
     Book read(String bookName);
 }

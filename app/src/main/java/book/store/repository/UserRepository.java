@@ -8,4 +8,7 @@ public interface UserRepository {
     User login(String username);
 
     Response createUser(User user);
+    
+    Response deleteUser(String username);
+    
 }

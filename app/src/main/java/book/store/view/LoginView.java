@@ -178,19 +178,24 @@ public class LoginView extends javax.swing.JFrame {
             passwordField.setText("");
         } else {
             // success login
-            log.info("Request to Server: login [{}]", username);
+            log.info("Request : login [{}]", username);
             var user = userService.login(username, Arrays.toString(password));
             
             if (user != null) {
-                log.info("Response from Server : "+ Response.SUCCESS +" - user is valid");
-                dispose();
-                new MenuFrame(user);
+                if (user.getUsername() != null) {
+                    log.info("Response from Server : "+ Response.SUCCESS +" - user is valid");
+                    dispose();
+                    new MenuFrame(user);
+                } else {
+                    infoLabel.setText("USERNAME OR PASSWORD IS WRONG");
+                    infoLabel.setForeground(Color.RED);
+                    log.error("Response : "+ Response.ERROR.getDescription() +" - USERNAME OR PASSWORD IS WRONG");
+                }
             } else {
-                infoLabel.setText("USERNAME OR PASSWORD IS WRONG");
+                infoLabel.setText("USER NOT REGISTERED");
                 infoLabel.setForeground(Color.RED);
-                log.error("Response from Server: "+ Response.ERROR.getDescription() +" USERNAME OR PASSWORD IS WRONG");
-            }
-            
+                log.error("Response : "+ Response.ERROR.getDescription() +" - USER NOT REGISTERED");
+            } 
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 
