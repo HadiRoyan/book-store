@@ -4,8 +4,10 @@ import book.store.entity.User;
 import book.store.repository.UserRepository;
 import book.store.repository.impl.UserRepositoryImpl;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled
 public class UserRepositoryTest {
 
     private UserRepository repository = new UserRepositoryImpl();

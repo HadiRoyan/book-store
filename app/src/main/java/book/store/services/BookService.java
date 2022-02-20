@@ -39,4 +39,8 @@ public class BookService {
     public Response delete(String bookName) {
         return repository.delete(bookName);
     }
+    
+    public Response update(Book book) {
+        return repository.update(book);
+    }
 }

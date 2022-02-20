@@ -101,6 +101,21 @@ public class MenuFrame extends javax.swing.JFrame {
         findBookQuantity = new javax.swing.JLabel();
         findInfoResultLabel = new javax.swing.JLabel();
         panelUpdate = new javax.swing.JPanel();
+        updateTitleLabel = new javax.swing.JLabel();
+        updateBookInputLabel = new javax.swing.JLabel();
+        updateBookInputField = new javax.swing.JTextField();
+        updateSearchBtn = new javax.swing.JButton();
+        updateInfoLabel = new javax.swing.JLabel();
+        updateNameLabel = new javax.swing.JLabel();
+        updateAuhtorLabel = new javax.swing.JLabel();
+        updatePublihserLabel = new javax.swing.JLabel();
+        updateQuantityLabel = new javax.swing.JLabel();
+        updateAuhtorField = new javax.swing.JTextField();
+        updatePublisherField = new javax.swing.JTextField();
+        updateQuantityField = new javax.swing.JTextField();
+        updateBookBtn = new javax.swing.JButton();
+        updateInfoResultLabel = new javax.swing.JLabel();
+        updateNameField = new javax.swing.JLabel();
         panelAccount = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -382,7 +397,7 @@ public class MenuFrame extends javax.swing.JFrame {
         deleteNameLabel.setText("Book Name");
 
         deletePublisherLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        deletePublisherLabel.setText("Publishser");
+        deletePublisherLabel.setText("Publisher");
 
         deleteQuantityLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         deleteQuantityLabel.setText("Quantity");
@@ -642,18 +657,144 @@ public class MenuFrame extends javax.swing.JFrame {
 
         panelData.add(panelFind, "panelFind");
 
-        panelUpdate.setBackground(new java.awt.Color(153, 0, 153));
+        panelUpdate.setBackground(new java.awt.Color(255, 255, 255));
         panelUpdate.setName("panelUpdate"); // NOI18N
+
+        updateTitleLabel.setBackground(new java.awt.Color(255, 255, 255));
+        updateTitleLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        updateTitleLabel.setForeground(new java.awt.Color(0, 0, 0));
+        updateTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        updateTitleLabel.setText("Update Book");
+
+        updateBookInputLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        updateBookInputLabel.setText("Book Name");
+
+        updateBookInputField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        updateSearchBtn.setBackground(new java.awt.Color(255, 255, 255));
+        updateSearchBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        updateSearchBtn.setForeground(new java.awt.Color(0, 0, 0));
+        updateSearchBtn.setText("Search");
+        updateSearchBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.black, java.awt.Color.white, java.awt.Color.black, java.awt.Color.white));
+        updateSearchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateSearchBtnActionPerformed(evt);
+            }
+        });
+
+        updateInfoLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        updateInfoLabel.setText("Find the book you want to update");
+
+        updateNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        updateNameLabel.setText("Book Name");
+
+        updateAuhtorLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        updateAuhtorLabel.setText("Auhtor");
+
+        updatePublihserLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        updatePublihserLabel.setText("Publisher");
+
+        updateQuantityLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        updateQuantityLabel.setText("Quantity");
+
+        updateAuhtorField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        updatePublisherField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        updateQuantityField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        updateQuantityField.setText("0");
+
+        updateBookBtn.setBackground(new java.awt.Color(255, 255, 255));
+        updateBookBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        updateBookBtn.setForeground(new java.awt.Color(0, 0, 0));
+        updateBookBtn.setText("Update");
+        updateBookBtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.black, java.awt.Color.white, java.awt.Color.black, java.awt.Color.white));
+        updateBookBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateBookBtnActionPerformed(evt);
+            }
+        });
+
+        updateInfoResultLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        updateNameField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout panelUpdateLayout = new javax.swing.GroupLayout(panelUpdate);
         panelUpdate.setLayout(panelUpdateLayout);
         panelUpdateLayout.setHorizontalGroup(
             panelUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 955, Short.MAX_VALUE)
+            .addGroup(panelUpdateLayout.createSequentialGroup()
+                .addContainerGap(390, Short.MAX_VALUE)
+                .addComponent(updateTitleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(365, Short.MAX_VALUE))
+            .addGroup(panelUpdateLayout.createSequentialGroup()
+                .addGap(120, 120, 120)
+                .addGroup(panelUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelUpdateLayout.createSequentialGroup()
+                        .addComponent(updatePublihserLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(updatePublisherField, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelUpdateLayout.createSequentialGroup()
+                        .addComponent(updateAuhtorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(updateAuhtorField, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelUpdateLayout.createSequentialGroup()
+                        .addComponent(updateNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(updateNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelUpdateLayout.createSequentialGroup()
+                        .addComponent(updateBookInputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(panelUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(updateInfoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelUpdateLayout.createSequentialGroup()
+                                .addComponent(updateBookInputField, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(40, 40, 40)
+                                .addComponent(updateSearchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(panelUpdateLayout.createSequentialGroup()
+                        .addComponent(updateQuantityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(panelUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(panelUpdateLayout.createSequentialGroup()
+                                .addComponent(updateBookBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(updateInfoResultLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(updateQuantityField, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelUpdateLayout.setVerticalGroup(
             panelUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 606, Short.MAX_VALUE)
+            .addGroup(panelUpdateLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(updateTitleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addGroup(panelUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(updateBookInputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updateBookInputField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updateSearchBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(updateInfoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(panelUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(updateNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updateNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(updateAuhtorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updateAuhtorField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(updatePublihserLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updatePublisherField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(updateQuantityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updateQuantityField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(panelUpdateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(updateBookBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updateInfoResultLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(163, Short.MAX_VALUE))
         );
 
         panelData.add(panelUpdate, "panelUpdate");
@@ -815,9 +956,9 @@ public class MenuFrame extends javax.swing.JFrame {
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
         log.info("Request to server : save book");
 
-        String bookName = nameField.getText().trim().toUpperCase();
-        String author = auhtorField.getText().trim().toUpperCase();
-        String publisher = publihserField1.getText().trim().toUpperCase();
+        String bookName = nameField.getText();
+        String author = auhtorField.getText();
+        String publisher = publihserField1.getText();
         int quantity = Integer.parseInt(quantityField.getText());
 
         if (bookName.isEmpty() || author.isEmpty() || publisher.isEmpty() || quantity < 0) {
@@ -884,7 +1025,7 @@ public class MenuFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDeleteUserActionPerformed
 
     private void deleteFindBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFindBtnActionPerformed
-        String bookName = deleteBookINameInput.getText().trim().toUpperCase();
+        String bookName = deleteBookINameInput.getText();
         
         if (!bookName.isBlank()) {
             log.info("Request : Search book = {}", bookName);
@@ -944,7 +1085,7 @@ public class MenuFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteBookBtnActionPerformed
 
     private void findBookNameBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findBookNameBtnActionPerformed
-        String bookName = findBookNameField.getText().trim().toUpperCase();
+        String bookName = findBookNameField.getText();
         
         if (!bookName.isBlank()) {
             log.info("Request : Search book = {}", bookName);
@@ -979,6 +1120,71 @@ public class MenuFrame extends javax.swing.JFrame {
     private void findBookUpdateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_findBookUpdateBtnActionPerformed
         cardLayout.show(panelData, "panelUpdate");
     }//GEN-LAST:event_findBookUpdateBtnActionPerformed
+
+    private void updateSearchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateSearchBtnActionPerformed
+        String bookName = updateBookInputField.getText();
+        log.info("Request : Search book = {}", bookName);
+        
+        if (!bookName.isBlank()) {
+            Book book = bookService.read(bookName);
+            if (book != null) {
+                log.info("Response : Book Found");
+                updateInfoResultLabel.setText("");
+                updateNameField.setText(book.getName());
+                updateAuhtorField.setText(book.getAuthor());
+                updatePublisherField.setText(book.getPublisher());
+                updateQuantityField.setText(String.valueOf(book.getQuantity()));
+            } else {
+                log.info("Response : Book is not found");
+                updateNameField.setText("");
+                updateAuhtorField.setText("");
+                updatePublisherField.setText("");
+                updateQuantityField.setText("0");
+                updateInfoResultLabel.setText("BOOK NOT FOUND");
+                updateInfoResultLabel.setForeground(Color.RED);
+            }
+        } else {
+            log.info("FIELD IS EMPTY", Response.FAILED.name());
+            updateInfoResultLabel.setText("Search Field Cannot Be Empty");
+            updateInfoResultLabel.setForeground(Color.RED);
+        }
+    }//GEN-LAST:event_updateSearchBtnActionPerformed
+
+    private void updateBookBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBookBtnActionPerformed
+        String bookName = updateNameField.getText();
+        String author = updateAuhtorField.getText();
+        String publisher = updatePublisherField.getText();
+        int quantity = Integer.parseInt(updateQuantityField.getText());
+        
+        if (author.isEmpty() || publisher.isEmpty() || quantity < 0) {
+            updateInfoResultLabel.setForeground(Color.RED);
+            updateInfoResultLabel.setText("PLEASE FILL ALL DATA BOOK");
+            log.error("Failed to save the book!!! data can't empty");
+        }else{
+            Book book = new Book(bookName, author, publisher, quantity);
+            var response = bookService.update(book);
+            
+            switch (response) {
+                case SUCCESS -> {
+                    updateInfoResultLabel.setForeground(Color.GREEN);
+                    updateInfoResultLabel.setText("SUCCESSFULLY UPDATE THE BOOK");
+                    log.info("Response server: "+ Response.SUCCESS.getDescription() + " - Success update book");
+                }
+                case FAILED -> {
+                    updateInfoResultLabel.setForeground(Color.RED);
+                    updateInfoResultLabel.setText("BOOK IS NOT FOUND");
+                    
+                    log.info("Response server: "+ Response.ERROR.getDescription() + " - FAILED to update book");
+                }
+                case ERROR -> {
+                    updateInfoResultLabel.setForeground(Color.RED);
+                    updateInfoResultLabel.setText("Something Failed, Please Try Again later");
+                    
+                    log.info("Response server: "+ Response.ERROR.getDescription() + " - FAILED to update book");
+                }
+            }
+        }
+    }//GEN-LAST:event_updateBookBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel accountIdField;
@@ -1047,6 +1253,21 @@ public class MenuFrame extends javax.swing.JFrame {
     private javax.swing.JTextField quantityField;
     private java.awt.Label quantityLabel;
     private java.awt.Label saveLabel;
+    private javax.swing.JTextField updateAuhtorField;
+    private javax.swing.JLabel updateAuhtorLabel;
+    private javax.swing.JButton updateBookBtn;
+    private javax.swing.JTextField updateBookInputField;
+    private javax.swing.JLabel updateBookInputLabel;
+    private javax.swing.JLabel updateInfoLabel;
+    private javax.swing.JLabel updateInfoResultLabel;
+    private javax.swing.JLabel updateNameField;
+    private javax.swing.JLabel updateNameLabel;
+    private javax.swing.JLabel updatePublihserLabel;
+    private javax.swing.JTextField updatePublisherField;
+    private javax.swing.JTextField updateQuantityField;
+    private javax.swing.JLabel updateQuantityLabel;
+    private javax.swing.JButton updateSearchBtn;
+    private javax.swing.JLabel updateTitleLabel;
     private javax.swing.JLabel usernameAccountField;
     // End of variables declaration//GEN-END:variables
 }

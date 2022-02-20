@@ -10,4 +10,6 @@ public interface BookRepository {
     Response delete(String bookName);
 
     Book read(String bookName);
+    
+    Response update(Book book);
 }

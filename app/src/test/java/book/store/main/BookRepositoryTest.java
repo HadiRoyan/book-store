@@ -6,6 +6,7 @@ import book.store.repository.impl.BookRepositoryImpl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+@Disabled
 public class BookRepositoryTest {
 
     private BookRepository repository = new BookRepositoryImpl();

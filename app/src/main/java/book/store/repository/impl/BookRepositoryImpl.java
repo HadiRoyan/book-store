@@ -104,7 +104,36 @@ public class BookRepositoryImpl implements BookRepository {
             return null;
         }
     }
-
+    
+    @Override
+    public Response update(Book book) {
+        log.info("Request : Update book");
+        if (isBookExist(book.getName())) {
+            String sql = """
+                UPDATE book SET author = ?, publisher = ?, quantity = ? WHERE name = ?
+                """;
+            try (
+                    Connection connection = new DatabaseUtil().getConnection();
+                    PreparedStatement statement = connection.prepareStatement(sql)
+            ) {
+                statement.setString(1, book.getAuthor());
+                statement.setString(2, book.getPublisher());
+                statement.setInt(3, book.getQuantity());
+                statement.setString(4, book.getName());
+                statement.executeUpdate();
+                
+                log.info("Response : {}", Response.SUCCESS);
+                return Response.SUCCESS; // Ok
+            } catch (SQLException e) {
+                log.error("Response : SERVER {} - {}", Response.ERROR, e.getMessage());
+                throw new RuntimeException(e.getMessage()); // Error
+            }
+        } else {
+            log.info("Response : Failed update book - book is not found : {}", book.getName());
+            return Response.FAILED; // Cannot dupilcate book name
+        }
+    }
+    
     private boolean isBookExist(String bookName) {
         String sql = """
                 SELECT name FROM book WHERE name = ?
