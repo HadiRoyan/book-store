@@ -4,7 +4,6 @@
 package book.store.main;
 
 import book.store.view.LoginView;
-import book.store.view.MenuFrame;
 
 public class App {
     public String getGreeting() {
